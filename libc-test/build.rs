@@ -1864,6 +1864,7 @@ fn test_freebsd(target: &str) {
                 "sys/user.h",
                 "sys/utsname.h",
                 "sys/uuid.h",
+                "sys/vmmeter.h",
                 "sys/wait.h",
                 "libprocstat.h",
                 "syslog.h",
@@ -2052,6 +2053,8 @@ fn test_freebsd(target: &str) {
             // Added in in FreeBSD 13.0 (r367776 and r367287)
             "SCM_CREDS2" | "LOCAL_CREDS_PERSISTENT" if Some(13) > freebsd_ver => true,
 
+            "VM_TOTAL" if Some(11) == freebsd_ver => true,
+
             _ => false,
         }
     });
@@ -2082,6 +2085,9 @@ fn test_freebsd(target: &str) {
 
             // `ptrace_sc_ret` is not available in FreeBSD 11
             "ptrace_sc_ret" if Some(11) == freebsd_ver => true,
+
+            // obsolete version
+            "vmtotal" if Some(11) == freebsd_ver => true,
 
             _ => false,
         }
